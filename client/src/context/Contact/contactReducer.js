@@ -7,7 +7,6 @@ import {
   FILTER_CONTACTS,
   CLEAR_FILTER,
 } from '../types';
-import contactContext from './contactContext';
 
 export default (state, action) => {
   switch (action.type) {
@@ -27,7 +26,7 @@ export default (state, action) => {
       return {
         ...state,
         contacts: state.contacts.filter(
-          (contact) => contact.id != action.payload
+          (contact) => contact.id !== action.payload
         ),
       };
     case SET_CURRENT:
