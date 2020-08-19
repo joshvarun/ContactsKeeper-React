@@ -35,6 +35,7 @@ export const ContactForm = () => {
     if (current === null) {
       addContact(contact);
     } else {
+      console.log(contact);
       updateContact(contact);
     }
     clearAll();

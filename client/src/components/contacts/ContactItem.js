@@ -9,8 +9,6 @@ export const ContactItem = ({ contact }) => {
 
   const { name, email, phone, _id, type } = contact;
 
-  console.log(contact);
-
   const onDelete = () => {
     deleteContact(_id);
     clearCurrent();

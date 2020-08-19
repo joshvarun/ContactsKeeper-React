@@ -26,7 +26,6 @@ const ContactState = (props) => {
   const [state, dispatch] = useReducer(contactReducer, initialState);
 
   const addContact = async (contact) => {
-    console.log(contact);
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -36,6 +35,27 @@ const ContactState = (props) => {
     try {
       const res = await Axios.post('/api/contacts', contact, config);
       dispatch({ type: ADD_CONTACT, payload: res.data });
+    } catch (err) {
+      dispatch({ type: CONTACT_ERROR, payload: err.response.msg });
+    }
+  };
+
+  const updateContact = async (contact) => {
+    console.log(contact);
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      const res = await Axios.put(
+        `/api/contacts/${contact._id}`,
+        contact,
+        config
+      );
+
+      dispatch({ type: UPDATE_CONTACT, payload: res.data });
     } catch (err) {
       dispatch({ type: CONTACT_ERROR, payload: err.response.msg });
     }
@@ -68,11 +88,7 @@ const ContactState = (props) => {
   };
 
   const clearCurrent = () => {
-    dispatch({ type: SET_CURRENT });
-  };
-
-  const updateContact = (contact) => {
-    dispatch({ type: UPDATE_CONTACT, payload: contact });
+    dispatch({ type: CLEAR_CURRENT });
   };
 
   const filterContacts = (text) => {
