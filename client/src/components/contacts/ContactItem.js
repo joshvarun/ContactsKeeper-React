@@ -7,8 +7,12 @@ export const ContactItem = ({ contact }) => {
 
   const { deleteContact, setCurrent, clearCurrent } = contactContext;
 
+  const { name, email, phone, _id, type } = contact;
+
+  console.log(contact);
+
   const onDelete = () => {
-    deleteContact(id);
+    deleteContact(_id);
     clearCurrent();
   };
 
@@ -16,7 +20,6 @@ export const ContactItem = ({ contact }) => {
     setCurrent(contact);
   };
 
-  const { name, email, phone, id, type } = contact;
   return (
     <div className='card bg-light'>
       <h3 className='text-primary text-left'>

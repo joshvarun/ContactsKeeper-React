@@ -1,5 +1,4 @@
 import React, { useReducer } from 'react';
-import { v4 } from 'uuid';
 import ContactContext from './contactContext';
 import contactReducer from './contactReducer';
 import Axios from 'axios';
@@ -27,6 +26,7 @@ const ContactState = (props) => {
   const [state, dispatch] = useReducer(contactReducer, initialState);
 
   const addContact = async (contact) => {
+    console.log(contact);
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -50,8 +50,13 @@ const ContactState = (props) => {
     }
   };
 
-  const deleteContact = (id) => {
-    dispatch({ type: DELETE_CONTACT, payload: id });
+  const deleteContact = async (id) => {
+    try {
+      const res = await Axios.delete(`/api/contacts/${id}`);
+      dispatch({ type: DELETE_CONTACT, payload: id });
+    } catch (err) {
+      dispatch({ type: CONTACT_ERROR, payload: err.response.msg });
+    }
   };
 
   const setCurrent = (contact) => {
